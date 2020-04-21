@@ -1,5 +1,6 @@
 package com.filiplike.powermask
 
+import com.filiplike.powermask.ContactDetector
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -13,14 +14,12 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.hardware.SensorEventListener
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
-
+import com.google.android.gms.wearable.DataItem
 
 
 class MainActivity : WearableActivity() {
 
-    private var initState = FloatArray(5)
+    private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
 
     private var maskOn = false
@@ -35,32 +34,20 @@ class MainActivity : WearableActivity() {
     private val mLightSensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             textView2.text=event.timestamp.toString()
+            currentState = event.values
             if (maskOn) {
-                currentState = event.values
-                contactCheck()
+                if (contectDetector.isContact(event.values)){
+                    makeBeep()
+                }else{
+                    lockMedia = false
+                }
             }
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         }
     }
-    private fun contactCheck(){
-        textView2.text = currentState[0].toString()
-        contact = true
-        for (index in currentState.indices){
-            if (currentState[index]<initState[index]-0.05&&currentState[index]>initState[index]+0.05){
-                contact = false
-            }
-            textView3.text = lockMedia.toString()
-        }
-        if (contact && !lockMedia){
-            textView4.text = currentState[0].toString()
-            lockMedia = true
-            mediaPlayer.start()
-        }else if(!contact&&lockMedia){
-            lockMedia = false
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,19 +64,22 @@ class MainActivity : WearableActivity() {
         // Enables Always-on
         setAmbientEnabled()
     }
+    private fun makeBeep(){
+        if (!lockMedia){
+            lockMedia = true
+            mediaPlayer.start()
+        }
+    }
     private fun maskWear(){
         if (!maskOn){
+            contectDetector = ContactDetector(currentState)
             button1.text = "Mask on"
-            mediaPlayer.start()
             maskOn = true
-            initState = currentState
-            textView4.text = initState[0].toString()
         }
         else{
             button1.text = "Mask of"
             maskOn = false
-            contact = false
-            lockMedia = false
+            lockMedia=false
         }
     }
 
@@ -101,6 +91,7 @@ class MainActivity : WearableActivity() {
     override fun onPause() {
         super.onPause()
         sensorMenager.unregisterListener(mLightSensorListener)
+        mediaPlayer.release()
     }
 
 }
