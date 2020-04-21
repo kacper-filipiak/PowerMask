@@ -34,9 +34,10 @@ class MainActivity : WearableActivity() {
     private val mLightSensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             textView2.text=event.timestamp.toString()
+            textView3.text=currentState[0].toString()
             currentState = event.values
             if (maskOn) {
-                if (contectDetector.isContact(event.values)){
+                if (contectDetector.isContact(currentState)){
                     makeBeep()
                 }else{
                     lockMedia = false

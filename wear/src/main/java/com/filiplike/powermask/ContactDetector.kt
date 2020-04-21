@@ -1,16 +1,18 @@
 package com.filiplike.powermask
 
 import android.media.MediaPlayer
+import android.util.Half.toFloat
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ContactDetector(var initState:FloatArray) {
+class ContactDetector( stateArray:FloatArray) {
 
+    private var initState = stateArray.clone()
 
     fun isContact(currentState:FloatArray):Boolean{
 
         var contact = true
         for (index in currentState.indices){
-            if (currentState[index] <= initState[index]-0.2 && currentState[index] >= initState[index]+0.2){
+            if (currentState[index] <= initState[index]-0.2f || currentState[index] >= initState[index]+0.2f){
                 contact = false
             }
         }
