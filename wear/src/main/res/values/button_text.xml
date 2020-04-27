@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="button_off_text">Put on a mask</string>
+    <string name="button_on_text">Take off a mask</string>
+</resources>
