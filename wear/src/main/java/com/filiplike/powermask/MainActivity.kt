@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.wearable.activity.WearableActivity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -17,6 +18,8 @@ class MainActivity : WearableActivity() {
 
     private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
+
+    private var counter = 0
 
     private var maskOn = false
     private var lockMedia = false
@@ -65,6 +68,7 @@ class MainActivity : WearableActivity() {
             lockMedia = true
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
             mediaPlayer.start()
+            counter++
         }
     }
     private fun maskWear(){
@@ -80,6 +84,8 @@ class MainActivity : WearableActivity() {
             imageView2.setImageResource(R.drawable.mask_off)
             maskOn = false
             lockMedia=false
+            Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+            counter = 0
         }
     }
 
