@@ -1,5 +1,6 @@
 package com.filiplike.powermask
 
+
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -12,6 +13,7 @@ import android.os.Vibrator
 import android.support.wearable.activity.WearableActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import com.filiplike.powermask.Report
 
 
 class MainActivity : WearableActivity() {
@@ -20,6 +22,7 @@ class MainActivity : WearableActivity() {
     private var currentState = FloatArray(5)
 
     private var counter = 0
+    private val report:Report = Report()
 
     private var maskOn = false
     private var lockMedia = false
@@ -68,6 +71,7 @@ class MainActivity : WearableActivity() {
             lockMedia = true
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
             mediaPlayer.start()
+            report.addItem(System.currentTimeMillis().toString())
             counter++
         }
     }
@@ -85,6 +89,8 @@ class MainActivity : WearableActivity() {
             maskOn = false
             lockMedia=false
             Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+            report.pushReport()
+            report.clear()
             counter = 0
         }
     }

@@ -1,17 +1,23 @@
 package com.filiplike.powermask
 
-import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.PutDataMapRequest
-import java.sql.Timestamp
 
-class Report(dataClient: DataClient) {
-    private var items = HashMap<Timestamp,Int>()
-    fun addItem(timestamp: Timestamp,count:Int){
-        items.put(timestamp,count)
+private const val COUNT_KEY = "com.example.key.count"
+
+class Report {
+    private val index: Int = 0
+    private var items:HashMap<String,String> = HashMap()
+    fun addItem(timestamp: String){
+        items.put("$index", timestamp)
     }
-    fun pushReport{
+    fun clear(){
+        items = hashMapOf()
+    }
+    fun pushReport(){
         val putDataRequest = PutDataMapRequest.create("/counted").run {
-            dataMap.putInt
+            val array:Array<String?> = arrayOfNulls(size = items.size)
+            items.values.forEach { s: String -> run { array[index] = s } }
+            dataMap.putStringArray(COUNT_KEY,array)
         }
     }
 }
