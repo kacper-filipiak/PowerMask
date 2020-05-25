@@ -1,19 +1,28 @@
 package com.filiplike.powermask
 
+import android.hardware.SensorEventListener
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.wearable.*
+import com.filiplike.powermask.CloudControler
 
 
-private const val COUNT_KEY = "com.example.key.count"
+private val COUNT_KEY = "com.example.key.count"
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataClient: DataClient = Wearable.getDataClient(this)
+    private lateinit var cloudControler:CloudControler
+    private lateinit var dataClient: DataClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        cloudControler = CloudControler(this)
+        dataClient = Wearable.getDataClient(this)
+        val a = arrayOf("123","321","tak")
+        cloudControler.pushArray(a)
+       // cloudControler.firebase.addValueEventListener(cloudControler.databaseListiner)
         //dataClient.addListener { dataEventBuffer ->  onDataChanged(dataEventBuffer) }
     }
     private fun onDataChanged(dataEvents: DataEventBuffer) {
@@ -33,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun updateData(array: Array<String>){
-
+        cloudControler.pushArray(array)
     }
 }
 
