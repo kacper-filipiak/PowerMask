@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.wearable.*
 import com.filiplike.powermask.CloudControler
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 private val COUNT_KEY = "com.example.key.count"
@@ -20,10 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         cloudControler = CloudControler(this)
         dataClient = Wearable.getDataClient(this)
+        cloudControler.user = "kisielWrosole"
         val a = arrayOf("123","321","tak")
         cloudControler.pushArray(a)
-       // cloudControler.firebase.addValueEventListener(cloudControler.databaseListiner)
-        //dataClient.addListener { dataEventBuffer ->  onDataChanged(dataEventBuffer) }
+        button.setOnClickListener { cloudControler.pushArray(a) }
     }
     private fun onDataChanged(dataEvents: DataEventBuffer) {
         dataEvents.forEach { event ->
