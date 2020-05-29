@@ -1,11 +1,15 @@
 package com.filiplike.powermask
 
+import android.content.Intent
 import android.hardware.SensorEventListener
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.wearable.*
 import com.filiplike.powermask.CloudControler
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDateTime
 
 
 private val COUNT_KEY = "com.example.key.count"
@@ -22,10 +26,13 @@ class MainActivity : AppCompatActivity() {
         cloudControler = CloudControler(this)
         dataClient = Wearable.getDataClient(this)
         cloudControler.user = "kisielWrosole"
-        val a = arrayOf("123","321","tak")
-        cloudControler.pushArray(a)
-        button.setOnClickListener { cloudControler.pushArray(a) }
+        dataClient.addListener { onDataChanged(it) }
+        button.setOnClickListener { cloudControler.pushArray(arrayOf(LocalDateTime.now().toString())); startActivity(Intent(this,ScrollActivity::class.java)
+        )  }
+        testView.setText(LocalDateTime.now().toString())
+
     }
+
     private fun onDataChanged(dataEvents: DataEventBuffer) {
         dataEvents.forEach { event ->
             // DataItem changed
