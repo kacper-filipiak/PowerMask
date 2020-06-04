@@ -10,6 +10,7 @@ import com.google.android.gms.wearable.*
 import com.filiplike.powermask.CloudControler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cloudControler:CloudControler
     private lateinit var dataClient: DataClient
     private lateinit var authControler: AuthControler
-
+    private  lateinit var colector: Job
+    private lateinit var timeList: MutableList<LocalDateTime?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
@@ -33,9 +35,12 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener { loginButonClicked(this) }
     }
     private fun loginButonClicked(context: Context){
-        authControler.signUp()
+        if(!authControler.isLogged){
+            authControler.signUp()
+            button.text = "Get your data"
+        }
         updateList(context)
-       // button.visibility = View.INVISIBLE
+        updateUserData()
     }
     private fun onDataChanged(dataEvents: DataEventBuffer) {
         dataEvents.forEach { event ->
@@ -56,12 +61,23 @@ class MainActivity : AppCompatActivity() {
     fun updateData(array: Array<String>){
         cloudControler.pushArray(array)
     }
-    fun updateList(context:Context){
-        val colector = runBlocking {  launch{
-            val data = cloudControler.pullData()
-            listview.adapter = ArrayAdapter(context, R.layout.list_item, data)
+    fun updateUserData(){
+        runBlocking { launch {
+            val record = cloudControler.pullUserData()
+            colector.join()
+            if(timeList.isNotEmpty()){
+                var currentRecord = LocalDateTime.now().minute - timeList.first()!!.minute
+                textView2.setText("${currentRecord}")
+            }
         }}
 
+    }
+    fun updateList(context:Context){
+        colector = runBlocking {  launch{
+            val data = cloudControler.pullData()
+            listview.adapter = ArrayAdapter(context, R.layout.list_item, data)
+            timeList = data.toMutableList()
+        }}
     }
     private fun makeData(){
         cloudControler.pushArray(arrayOf(LocalDateTime.now().toString()))

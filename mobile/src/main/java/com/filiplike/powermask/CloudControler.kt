@@ -37,7 +37,6 @@ class CloudControler(context: Context) {
 
     suspend fun pullData(): Array<LocalDateTime?> {
 
-        var orderedList = mutableListOf<LocalDateTime?>()
         val corut = runBlocking {  launch {
             firebase.collection("users").document(user).get()
                 .addOnSuccessListener {
@@ -61,4 +60,19 @@ class CloudControler(context: Context) {
         return deserializer.convertStringArray(timeList)
 
     }
-}
+    suspend fun pullUserData():Int{
+        var record = 0
+        val corut = runBlocking {
+            launch {
+                firebase.collection("usersData").document(user).get()
+                    .addOnSuccessListener {
+                     record=it?.data?.values?.first().toString().toInt()
+
+                    }
+            }
+        }
+        corut.join()
+        return record
+        }
+    }
+
