@@ -14,6 +14,7 @@ import android.support.wearable.activity.WearableActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import com.filiplike.powermask.Report
+import java.time.LocalDateTime
 
 
 class MainActivity : WearableActivity() {
@@ -71,7 +72,7 @@ class MainActivity : WearableActivity() {
             lockMedia = true
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
             mediaPlayer.start()
-            report.addItem(System.currentTimeMillis().toString())
+            report.addItem(LocalDateTime.now())
             counter++
         }
     }
