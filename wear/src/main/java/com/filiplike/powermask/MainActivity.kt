@@ -34,13 +34,17 @@ class MainActivity : WearableActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
 
+    //adding listener for sensor state change
     private val mLightSensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             currentState = event.values
+            //if protection is activated
             if (maskOn) {
+                //if occurred face touch
                 if (contectDetector.isContact(currentState)){
                     makeBeep()
                 }else{
+                    //release media player
                     lockMedia = false
                 }
             }
@@ -61,35 +65,46 @@ class MainActivity : WearableActivity() {
         rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
         mediaPlayer = MediaPlayer.create(this, R.raw.sound)
 
         // Enables Always-on
         setAmbientEnabled()
     }
+    //handles beeping and buzzing
     private fun makeBeep(){
+        //if media player unlocked
         if (!lockMedia){
+            //lock media
             lockMedia = true
+            //Vibrate
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
+            //Play sound
             mediaPlayer.start()
+            //add to send list
             report.addItem(LocalDateTime.now())
+            //updates counter
             counter++
         }
     }
     private fun maskWear(){
         if (!maskOn){
+            //put on mask and recalibrating states
             contectDetector = ContactDetector(currentState)
+            //enable notification via buzzing
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
+            //update UI
             button1.setText(R.string.button_on_text)
             imageView2.setImageResource(R.drawable.mask_on)
             maskOn = true
         }
         else{
+            //Update UI
             button1.setText(R.string.button_off_text)
             imageView2.setImageResource(R.drawable.mask_off)
+            Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+            //resetting values and pushing data
             maskOn = false
             lockMedia=false
-            Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
             report.pushReport()
             report.clear()
             counter = 0
