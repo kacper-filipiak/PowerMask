@@ -28,31 +28,13 @@ class MainActivity : WearableActivity() {
     private var maskOn = false
     private var lockMedia = false
 
-    private lateinit var sensorMenager : SensorManager
-    private lateinit var rotationSensor: Sensor
+//    lateinit var sensorMenager : SensorManager
+//    lateinit var rotationSensor: Sensor
 
-    private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var vibrator: Vibrator
+    lateinit var mediaPlayer: MediaPlayer
+     lateinit var vibrator: Vibrator
 
     //adding listener for sensor state change
-    private val mLightSensorListener = object : SensorEventListener {
-        override fun onSensorChanged(event: SensorEvent) {
-            currentState = event.values
-            //if protection is activated
-            if (maskOn) {
-                //if occurred face touch
-                if (contectDetector.isContact(currentState)){
-                    makeBeep()
-                }else{
-                    //release media player
-                    lockMedia = false
-                }
-            }
-        }
-
-        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,39 +42,39 @@ class MainActivity : WearableActivity() {
         setContentView(R.layout.activity_main)
 
         button1.setOnClickListener { maskWear() }
-
-        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-
+//        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+//        rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+//
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         mediaPlayer = MediaPlayer.create(this, R.raw.sound)
-
 
         // Enables Always-on
         setAmbientEnabled()
     }
     //handles beeping and buzzing
-    private fun makeBeep(){
-        //if media player unlocked
-        if (!lockMedia){
-            //lock media
-            lockMedia = true
-            //Vibrate
-            vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
-            //Play sound
-            mediaPlayer.start()
-            //add to send list
-            report.addItem(LocalDateTime.now())
-            //updates counter
-            counter++
-        }
-    }
+//    private fun makeBeep(){
+//        //if media player unlocked
+//        if (!lockMedia){
+//            //lock media
+//            lockMedia = true
+//            //Vibrate
+//            vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
+//            //Play sound
+//            mediaPlayer.start()
+//            //add to send list
+//            report.addItem(LocalDateTime.now())
+//            //updates counter
+//            counter++
+//        }
+//    }
+
     private fun maskWear(){
         if (!maskOn){
             //put on mask and recalibrating states
             contectDetector = ContactDetector(currentState)
             //enable notification via buzzing
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
+            mediaPlayer.start()
             //update UI
             button1.setText(R.string.button_on_text)
             imageView2.setImageResource(R.drawable.mask_on)
@@ -116,13 +98,12 @@ class MainActivity : WearableActivity() {
 
     override fun onResume() {
         super.onResume()
-        sensorMenager.registerListener(mLightSensorListener, rotationSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        //sensorMenager.registerListener(mLightSensorListener, rotationSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
         }
     override fun onPause() {
         super.onPause()
-        sensorMenager.unregisterListener(mLightSensorListener)
-        mediaPlayer.release()
+        //mediaPlayer.release()
     }
 
 }

@@ -6,15 +6,21 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
+import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TrackingService : Service() {
 
-    private val CHANNEL_ID = "ForegroundService Kotlin"
+    private val CHANNEL_ID = "PowerMaskService"
+
 
     companion object {
         fun startService(context: Context, message: String) {
@@ -31,7 +37,12 @@ class TrackingService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         //do heavy work on a background thread
-        val input = intent?.getStringExtra("inputExtra")
+        val context = this
+        runBlocking { launch {
+            val maskOnMenager : MaskOnMenager = MaskOnMenager(context)
+        } }
+
+        val input = intent?.getStringExtra ("inputExtra")
         createNotificationChannel()
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
@@ -46,11 +57,7 @@ class TrackingService : Service() {
             .build()
         startForeground(1, notification)
         //stopSelf();
-        constantSound()
         return START_NOT_STICKY
-    }
-    fun constantSound(){
-        print("here code")
     }
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -59,7 +66,7 @@ class TrackingService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID, "PowerMask service",
+                CHANNEL_ID, "PowerMaskService",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
