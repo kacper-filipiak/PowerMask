@@ -1,29 +1,17 @@
 package com.filiplike.powermask
 
-import android.content.ContentValues
 import android.content.Context
-import android.graphics.Color
-import android.hardware.SensorEventListener
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.wearable.*
-import com.filiplike.powermask.CloudControler
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.time.LocalDateTime
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.text.style.BackgroundColorSpan
-import android.util.Log
-import android.widget.Toast
-import androidx.core.view.get
 import java.time.Duration
-import kotlin.math.ceil
+import java.time.LocalDateTime
 
 
 private val COUNT_KEY = "com.powermask.key.count"
@@ -53,6 +41,7 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
             //signing uo
             authControler.signUp()
             button.text = "Get your data"
+            makeData();
         }
         //Updating list and record
         updateList(context)
