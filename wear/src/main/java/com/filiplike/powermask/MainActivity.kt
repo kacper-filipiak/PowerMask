@@ -2,6 +2,7 @@ package com.filiplike.powermask
 
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -13,7 +14,6 @@ import android.os.Vibrator
 import android.support.wearable.activity.WearableActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import com.filiplike.powermask.Report
 import java.time.LocalDateTime
 
 
@@ -67,6 +67,7 @@ class MainActivity : WearableActivity() {
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         mediaPlayer = MediaPlayer.create(this, R.raw.sound)
 
+
         // Enables Always-on
         setAmbientEnabled()
     }
@@ -96,6 +97,7 @@ class MainActivity : WearableActivity() {
             button1.setText(R.string.button_on_text)
             imageView2.setImageResource(R.drawable.mask_on)
             maskOn = true
+            TrackingService.startService(this, "You're defended!")
         }
         else{
             //Update UI
@@ -108,6 +110,7 @@ class MainActivity : WearableActivity() {
             report.pushReport()
             report.clear()
             counter = 0
+            TrackingService.stopService(this)
         }
     }
 

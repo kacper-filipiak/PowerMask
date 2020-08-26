@@ -1,9 +1,8 @@
 package com.filiplike.powermask
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-class TimeDeserializer() {
+class TimeDeserializer {
 
     //converts list of strings to array of LocaleDateTime
     fun convertStringArray(list: MutableList<String>):Array<LocalDateTime?> {
