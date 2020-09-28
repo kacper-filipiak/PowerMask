@@ -92,6 +92,7 @@ class MainActivity : WearableActivity() {
             report.pushReport()
             report.clear()
             counter = 0
+
             TrackingService.stopService(this)
         }
     }

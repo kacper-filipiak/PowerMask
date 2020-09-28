@@ -65,9 +65,9 @@ class MaskOnMenager {
         }
     }
 
-    private fun makeBeep(){
+    private fun makeBeep() {
         //if media player unlocked
-        if (!lockMedia){
+        if (!lockMedia) {
             //lock media
             lockMedia = true
             //Vibrate
@@ -79,5 +79,9 @@ class MaskOnMenager {
             //updates counter
             counter++
         }
+    }
+    fun destroy(){
+        sensorMenager.unregisterListener(mLightSensorListener)
+
     }
 }

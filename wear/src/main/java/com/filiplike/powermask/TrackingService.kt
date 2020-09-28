@@ -14,14 +14,12 @@ import android.os.IBinder
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class TrackingService : Service() {
 
     private val CHANNEL_ID = "PowerMaskService"
-
-
+    private lateinit var corut: Job
     companion object {
         fun startService(context: Context, message: String) {
             val startIntent = Intent(context, TrackingService::class.java)
@@ -38,8 +36,9 @@ class TrackingService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         //do heavy work on a background thread
         val context = this
-        runBlocking { launch {
+        corut = runBlocking { launch {
             val maskOnMenager : MaskOnMenager = MaskOnMenager(context)
+            maskOnMenager.destroy()
         } }
 
         val input = intent?.getStringExtra ("inputExtra")
