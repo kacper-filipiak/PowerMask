@@ -12,7 +12,7 @@ import android.os.Vibrator
 import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDateTime
 
-class MaskOnMenager {
+class MaskOnManager {
 
     private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
@@ -80,6 +80,7 @@ class MaskOnMenager {
             counter++
         }
     }
+
     fun destroy(){
         sensorMenager.unregisterListener(mLightSensorListener)
 
