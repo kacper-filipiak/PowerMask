@@ -9,6 +9,7 @@ import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDateTime
 
@@ -81,6 +82,8 @@ class MaskOnMenager {
         }
     }
     fun destroy(){
+        Toast.makeText(, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+
         sensorMenager.unregisterListener(mLightSensorListener)
 
     }

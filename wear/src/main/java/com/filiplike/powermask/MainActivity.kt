@@ -3,6 +3,7 @@ package com.filiplike.powermask
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -12,6 +13,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.wearable.activity.WearableActivity
+import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDateTime
@@ -33,6 +35,7 @@ class MainActivity : WearableActivity() {
 
     lateinit var mediaPlayer: MediaPlayer
      lateinit var vibrator: Vibrator
+    lateinit var maskAnimation:AnimationDrawable
 
     //adding listener for sensor state change
 
@@ -40,6 +43,13 @@ class MainActivity : WearableActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val maskImage = findViewById<ImageView>(R.id.imageView2).apply {
+            //setImageResource(R.drawable.animation_on_list)
+            setImageResource(R.drawable.animation_off_list)
+            maskAnimation = drawable as AnimationDrawable
+        }
+        maskAnimation.start()
 
         button1.setOnClickListener { maskWear() }
 //        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -77,14 +87,24 @@ class MainActivity : WearableActivity() {
             mediaPlayer.start()
             //update UI
             button1.setText(R.string.button_on_text)
-            imageView2.setImageResource(R.drawable.mask_on)
+            findViewById<ImageView>(R.id.imageView2).apply {
+                //setImageResource(R.drawable.animation_on_list)
+                setImageResource(R.drawable.animation_on_list)
+                maskAnimation = drawable as AnimationDrawable
+            }
+            maskAnimation.start()
             maskOn = true
             TrackingService.startService(this, "You're defended!")
         }
         else{
             //Update UI
             button1.setText(R.string.button_off_text)
-            imageView2.setImageResource(R.drawable.mask_off)
+            findViewById<ImageView>(R.id.imageView2).apply {
+                //setImageResource(R.drawable.animation_on_list)
+                setImageResource(R.drawable.animation_off_list)
+                maskAnimation = drawable as AnimationDrawable
+            }
+            maskAnimation.start()
             Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
             //resetting values and pushing data
             maskOn = false
