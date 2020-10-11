@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDateTime
 
-class MaskOnMenager {
+class MaskOnManager {
 
     private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
