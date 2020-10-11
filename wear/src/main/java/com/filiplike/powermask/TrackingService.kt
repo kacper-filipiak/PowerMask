@@ -46,6 +46,7 @@ class TrackingService : Service() {
             this,
             0, notificationIntent, 0
         )
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("PowerMask service")
             .setContentText(input)

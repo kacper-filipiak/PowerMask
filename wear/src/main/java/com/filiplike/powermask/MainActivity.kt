@@ -105,7 +105,6 @@ class MainActivity : WearableActivity() {
                 maskAnimation = drawable as AnimationDrawable
             }
             maskAnimation.start()
-            Toast.makeText(applicationContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
             //resetting values and pushing data
             maskOn = false
             lockMedia=false

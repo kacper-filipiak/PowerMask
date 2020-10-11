@@ -32,8 +32,11 @@ class MaskOnManager {
 
     private var initEvent = true
 
+    private lateinit var mContext: Context
+
     constructor(context: Context){
 
+        mContext = context
         sensorMenager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
@@ -82,7 +85,7 @@ class MaskOnManager {
         }
     }
     fun destroy(){
-        Toast.makeText(, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(mContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
 
         sensorMenager.unregisterListener(mLightSensorListener)
 
