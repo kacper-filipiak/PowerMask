@@ -9,10 +9,11 @@ import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDateTime
 
-class MaskOnMenager {
+class MaskOnManager {
 
     private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
@@ -31,8 +32,11 @@ class MaskOnMenager {
 
     private var initEvent = true
 
+    private lateinit var mContext: Context
+
     constructor(context: Context){
 
+        mContext = context
         sensorMenager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
@@ -65,9 +69,9 @@ class MaskOnMenager {
         }
     }
 
-    private fun makeBeep(){
+    private fun makeBeep() {
         //if media player unlocked
-        if (!lockMedia){
+        if (!lockMedia) {
             //lock media
             lockMedia = true
             //Vibrate
@@ -79,5 +83,11 @@ class MaskOnMenager {
             //updates counter
             counter++
         }
+    }
+    fun destroy(){
+        Toast.makeText(mContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
+
+        sensorMenager.unregisterListener(mLightSensorListener)
+
     }
 }

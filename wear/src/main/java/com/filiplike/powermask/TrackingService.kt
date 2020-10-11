@@ -6,22 +6,17 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.hardware.Sensor
-import android.hardware.SensorManager
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
-import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class TrackingService : Service() {
 
     private val CHANNEL_ID = "PowerMaskService"
-
-
+    private lateinit var corut: Job
+    private lateinit var lMaskOnManager : MaskOnManager
     companion object {
         fun startService(context: Context, message: String) {
             val startIntent = Intent(context, TrackingService::class.java)
@@ -38,17 +33,19 @@ class TrackingService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         //do heavy work on a background thread
         val context = this
-        runBlocking { launch {
-            val maskOnMenager : MaskOnMenager = MaskOnMenager(context)
+        corut = runBlocking { launch {
+            val maskOnManager : MaskOnManager = MaskOnManager(context)
+            lMaskOnManager = maskOnManager
         } }
 
         val input = intent?.getStringExtra ("inputExtra")
         createNotificationChannel()
-        val notificationIntent = Intent(this, MainActivity::class.java)
+        val notificationIntent = Intent(this, AppOpener::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, 0
         )
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("PowerMask service")
             .setContentText(input)
@@ -56,7 +53,6 @@ class TrackingService : Service() {
             .setContentIntent(pendingIntent)
             .build()
         startForeground(1, notification)
-        //stopSelf();
         return START_NOT_STICKY
     }
     override fun onBind(intent: Intent): IBinder? {
@@ -72,5 +68,12 @@ class TrackingService : Service() {
             val manager = getSystemService(NotificationManager::class.java)
             manager!!.createNotificationChannel(serviceChannel)
         }
+    }
+
+    override fun onDestroy() {
+
+        lMaskOnManager.destroy()
+        //Toast.makeText(this, "Service Destroyed", Toast.LENGTH_SHORT).show();
+        super.onDestroy()
     }
 }
