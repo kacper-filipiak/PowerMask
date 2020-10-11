@@ -9,7 +9,7 @@ import android.os.IBinder
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class Terminator : Activity(){
+class AppOpener : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

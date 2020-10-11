@@ -50,7 +50,7 @@ class MainActivity : WearableActivity() {
         }
         maskAnimation.start()
 
-        button1.setOnClickListener { maskWear() }
+        imageView2.setOnClickListener { maskWear() }
 //        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 //        rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 //
@@ -85,7 +85,7 @@ class MainActivity : WearableActivity() {
             vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
             mediaPlayer.start()
             //update UI
-            button1.setText(R.string.button_on_text)
+            textView.setText(R.string.button_on_text)
             findViewById<ImageView>(R.id.imageView2).apply {
                 //setImageResource(R.drawable.animation_on_list)
                 setImageResource(R.drawable.animation_on_list)
@@ -97,7 +97,7 @@ class MainActivity : WearableActivity() {
         }
         else{
             //Update UI
-            button1.setText(R.string.button_off_text)
+            textView.setText(R.string.button_off_text)
             findViewById<ImageView>(R.id.imageView2).apply {
                 //setImageResource(R.drawable.animation_on_list)
                 setImageResource(R.drawable.animation_off_list)

@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
@@ -41,7 +40,7 @@ class TrackingService : Service() {
 
         val input = intent?.getStringExtra ("inputExtra")
         createNotificationChannel()
-        val notificationIntent = Intent(this, Terminator::class.java)
+        val notificationIntent = Intent(this, AppOpener::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, 0
