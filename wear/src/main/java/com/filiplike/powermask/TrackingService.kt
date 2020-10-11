@@ -74,7 +74,7 @@ class TrackingService : Service() {
     override fun onDestroy() {
 
         lMaskOnManager.destroy()
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Service Destroyed", Toast.LENGTH_SHORT).show();
         super.onDestroy()
     }
 }

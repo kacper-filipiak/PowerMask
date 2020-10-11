@@ -29,7 +29,6 @@ class MainActivity : WearableActivity() {
 
     private var maskOn = false
     private var lockMedia = false
-
 //    lateinit var sensorMenager : SensorManager
 //    lateinit var rotationSensor: Sensor
 
