@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
     }
     //getting data from wearable via DataLayer
     override fun onDataChanged(dataEvents: DataEventBuffer) {
+        Toast.makeText(this, "Data from wear", Toast.LENGTH_LONG)
         dataEvents.forEach { event ->
             // DataItem changed
             if (event.type == DataEvent.TYPE_CHANGED) {

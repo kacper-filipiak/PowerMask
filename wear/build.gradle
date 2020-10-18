@@ -20,6 +20,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        release {
+            keyAlias 'key3'
+            keyPassword '5z74murd4'
+            storeFile file("/home/kacper/AndroidStudioProjects/key/filiplikeKey.jks")
+            storePassword '5z74murd4'
+        }
+    }
 }
 
 dependencies {

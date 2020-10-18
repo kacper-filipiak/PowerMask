@@ -107,7 +107,7 @@ class MainActivity : WearableActivity() {
             //resetting values and pushing data
             maskOn = false
             lockMedia=false
-            report.pushReport()
+            report.pushReport(this)
             report.clear()
             counter = 0
 
