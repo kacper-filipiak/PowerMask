@@ -1,15 +1,20 @@
 package com.filiplike.powermask
 
+import android.R.attr.path
+import android.R.id.message
+import android.app.Activity
+import android.content.ContentProvider
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.wearable.DataClient
-import com.google.android.gms.wearable.DataItem
-import com.google.android.gms.wearable.PutDataMapRequest
-import com.google.android.gms.wearable.Wearable
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.wearable.*
 import java.time.LocalDateTime
+import java.util.concurrent.ExecutionException
 
 
 //key to identify transferred object
@@ -19,7 +24,11 @@ class Report {
     private val index: Int = 0
     private var items:HashMap<String, LocalDateTime> = HashMap()
     private var sessionData = String()
+    private var user = "kisielWrosole"
     lateinit var dataClient: DataClient
+    fun user():String{
+        return user
+    }
     //adds LocaleDateTime to prepare it for sending
     fun addItem(timestamp: LocalDateTime){
         items.put("$index", timestamp)
@@ -30,12 +39,46 @@ class Report {
         sessionData = ""
         items = hashMapOf()
     }
+    fun getData():String{
+        return  "$user | $sessionData"
+    }
+    fun pushMessage(context: Context){
+        CloudControler().pushList(sessionData.split('|'))
+        val localNodeId = Wearable.getNodeClient(context).connectedNodes
+        localNodeId.addOnCompleteListener { node ->
+            Log.d(
+                ContentValues.TAG,
+                "Sending text was completed: $node"
+            )
+        }
+        localNodeId.addOnSuccessListener{ nodeId ->
+            nodeId.forEach {
+                Wearable.getMessageClient(context)
+                    .sendMessage(it.id, "/count", sessionData.toByteArray())
+                    .addOnSuccessListener {
+                        Log.d(
+                            ContentValues.TAG,
+                            "Sending text success: $it"
+                        )
+                    }
+                Log.d(
+                    ContentValues.TAG,
+                    "Sending text: ${it.displayName}"
+                )
+            }
+        }
+    }
     //sending data to phone via DataLayer
     fun pushReport(context: Context){
-        dataClient = Wearable.getDataClient(context)
+        Log.d(
+            TAG,
+            "Sending text ${sessionData}"
+        )
+        //dataClient = Wearable.getDataClient(context)
+        dataClient = Wearable.WearableOptions.Builder().setLooper(Looper.myLooper()).build().let { options ->
+            Wearable.getDataClient(context)
+        }
          val  putDataMapRequest = PutDataMapRequest.create("/count").run {
-            val array:Array<String?> = arrayOfNulls(size = items.size)
-            items.values.forEach { s -> run { array[index] = s.toString() } }
             dataMap.putStringArray(COUNT_KEY, arrayOf(sessionData))
              setUrgent()
              asPutDataRequest()
@@ -52,6 +95,44 @@ class Report {
                 TAG,
                 "Sending text was unsuccessful: $dataItem"
             )
+
+        }
+
+
+    }
+    fun pushReportToNodes(context: Context){
+        val nodeListTask: Task<List<Node>> = Wearable.getNodeClient(context).connectedNodes
+        try {
+            val nodes = Tasks.await(nodeListTask)
+            nodes.forEach { node ->
+                val sendMessageTask = Wearable.getMessageClient(context).sendMessage(node.id, "/powermask/count", sessionData.toByteArray())
+                     try {
+
+                         var result = Tasks.await(sendMessageTask)
+
+//Handle the e      rors//
+
+                     } catch (exception: ExecutionException) {
+
+//TO DO//
+
+                     } catch ( exception:InterruptedException) {
+
+//TO DO//
+
+                     }
+
+            }
+
+        }
+        catch (exception: ExecutionException) {
+
+//TO DO//
+
+        } catch ( exception:InterruptedException) {
+
+//TO DO//
+
         }
 
     }

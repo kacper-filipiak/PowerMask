@@ -1,7 +1,10 @@
 package com.filiplike.powermask
 
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +19,7 @@ import java.time.LocalDateTime
 
 private val COUNT_KEY = "com.powermask.key.count"
 
-class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var cloudControler:CloudControler
     private lateinit var dataClient: DataClient
@@ -28,16 +31,38 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initializing controllers amd clients
-        cloudControler = CloudControler(this)
+        cloudControler = CloudControler()
         dataClient = Wearable.getDataClient(this)
         authControler = AuthControler(cloudControler)
+
+        startService(Intent(this, DataLayerService::class.java))
+
         //adding listeners
-        dataClient.addListener(this)
+        //dataClient.addListener(this)
         button.setOnClickListener { loginButonClicked(this) }
 
     }
     private fun loginButonClicked(context: Context){
-        if(!authControler.isLogged){
+        // Send the RPC
+        val localNodeId = Wearable.getNodeClient(this).connectedNodes
+        localNodeId.addOnCompleteListener { node ->
+            Log.d(
+                ContentValues.TAG,
+                "Sending text was completed: $node"
+            )
+        }
+        localNodeId.addOnSuccessListener{ nodeId ->
+            nodeId.forEach {
+                Wearable.getMessageClient(this)
+                    .sendMessage(it.id, "/count", "payload".toByteArray())
+                Log.d(
+                    ContentValues.TAG,
+                    "Sending text was successful: ${it.displayName}"
+                )
+            }
+            Toast.makeText(this,"Send message", Toast.LENGTH_LONG)
+        }
+            if(!authControler.isLogged){
             //signing uo
             authControler.signUp()
             button.text = "Get your data"
@@ -48,26 +73,26 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
         updateUserData()
     }
     //getting data from wearable via DataLayer
-    override fun onDataChanged(dataEvents: DataEventBuffer) {
-        Toast.makeText(this, "Data from wear", Toast.LENGTH_LONG)
-        dataEvents.forEach { event ->
-            // DataItem changed
-            if (event.type == DataEvent.TYPE_CHANGED) {
-                event.dataItem.also { item ->
-                    if (item.uri.path?.compareTo("/count") == 0) {
-                        DataMapItem.fromDataItem(item).dataMap.apply {
-                            updateData(getStringArray(COUNT_KEY))
-                        }
-                    }
-                }
-            } else if (event.type == DataEvent.TYPE_DELETED) {
-                // DataItem deleted
-            }
-        }
-    }
+    //override fun onDataChanged(dataEvents: DataEventBuffer) {
+    //    Toast.makeText(this, "Data from wear", Toast.LENGTH_LONG)
+    //    dataEvents.forEach { event ->
+    //        // DataItem changed
+    //        if (event.type == DataEvent.TYPE_CHANGED) {
+    //            event.dataItem.also { item ->
+    //                if (item.uri.path?.compareTo("/powermask/count") == 0) {
+    //                    DataMapItem.fromDataItem(item).dataMap.apply {
+    //                        updateData(getStringArray(COUNT_KEY))
+    //                    }
+    //                }
+    //            }
+    //        } else if (event.type == DataEvent.TYPE_DELETED) {
+    //            // DataItem deleted
+    //        }
+    //    }
+    //}
     //calling push to Firestore
     fun updateData(array: Array<String>){
-        cloudControler.pushArray(array)
+        //cloudControler.pushList(array)
     }
     //Updating record
     fun updateUserData(){
@@ -105,7 +130,7 @@ class MainActivity : AppCompatActivity(), DataClient.OnDataChangedListener {
     //generating test data
     //TODO: cut it out
     private fun makeData(){
-        cloudControler.pushArray(arrayOf(LocalDateTime.now().toString()))
+        //cloudControler.pushList(arrayOf(LocalDateTime.now().toString()))
     }
 }
 

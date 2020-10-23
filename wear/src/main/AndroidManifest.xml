@@ -15,12 +15,17 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <service
+            android:name=".CloudService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+
+        </service>
+        <service
             android:name=".TrackingService"
             android:enabled="true"
-            android:exported="true"></service>
-        <service
-            android:name=".OnTrackingService"
-            android:exported="false" />
+            android:exported="true" />
+        <service android:name=".DataLayerService" />
 
         <uses-library
             android:name="com.google.android.wearable"
@@ -31,7 +36,10 @@
         -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+            android:value="false" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".MainActivity"
@@ -42,7 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppOpener"/>
+        <activity android:name=".AppOpener" />
     </application>
 
 </manifest>

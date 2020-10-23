@@ -21,7 +21,8 @@ class CloudControler() {
     //getting reference to Firesrore
     private val firebase = Firebase.firestore
     //User login to Firebase data
-    var user: String = R.string.userName.toString()
+    var user: String = "kisielWrosole"
+    // R.string.userName.toString()
     private var timeList: MutableList<String> = mutableListOf()
 
 
@@ -29,7 +30,7 @@ class CloudControler() {
     private var record = Duration.ZERO
 
     //getting deserializer for LocaleTimeDate
-    private val deserializer = TimeDeserializer()
+    //private val deserializer = TimeDeserializer()
 
     //uploading data from wearable
     fun pushList(list: List<String>) {
@@ -80,8 +81,8 @@ class CloudControler() {
         //waiting for thread to finish
         corut.join()
         //deserialization data and returning
-        return deserializer.convertStringArray(timeList)
-
+        //return deserializer.convertStringArray(timeList)
+        return arrayOfNulls(0)
     }
     //pull user record
     suspend fun pullUserData():Duration{

@@ -1,316 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot = "false">
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot = "true">
     <item android:drawable="@drawable/on_frame0000"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0001"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0002"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0003"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0004"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0005"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0006"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0007"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0008"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0009"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0010"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0012"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0013"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0014"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0015"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0016"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0017"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0018"
-        android:duration = "100"
+        android:duration = "500"
     />
     <item android:drawable="@drawable/on_frame0019"
-        android:duration = "100"
+        android:duration = "500"
     />
     <item android:drawable="@drawable/on_frame0020"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0021"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0022"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0023"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0024"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0025"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0026"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0027"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0028"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0029"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0030"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0031"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0032"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0033"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0034"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0035"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0036"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0037"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0038"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0039"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0040"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0041"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0042"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0043"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0044"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0045"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0046"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0047"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0048"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0049"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0050"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0051"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0052"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0053"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0054"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0055"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0056"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0057"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0058"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0059"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0060"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0061"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0062"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0063"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0064"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0065"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0066"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0067"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0068"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0069"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0070"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0071"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0072"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0073"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0074"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0075"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0076"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0077"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0078"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0079"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0080"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0080"
-    android:duration = "100"
+    android:duration = "500"
     />
     <item android:drawable="@drawable/on_frame0081"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0082"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0083"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0084"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0085"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0086"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0087"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0088"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0089"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0091"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0092"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0093"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0094"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0095"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0096"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0097"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0098"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0099"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0100"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0101"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0102"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0103"
-        android:duration = "100"
+        android:duration = "500"
         />
     <item android:drawable="@drawable/on_frame0104"
-        android:duration = "100"
+        android:duration = "500"
         />
 
 

@@ -1,16 +1,19 @@
 package com.filiplike.powermask
 
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.media.MediaPlayer
+import android.os.PersistableBundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDateTime
 
 class MaskOnManager {
@@ -38,8 +41,13 @@ class MaskOnManager {
 
         mContext = context
         sensorMenager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
+        report.addItem(LocalDateTime.now())
+        if(sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR)
+        }else{
+            rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+        }
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         mediaPlayer = MediaPlayer.create(context, R.raw.sound)
 
@@ -88,6 +96,24 @@ class MaskOnManager {
         Toast.makeText(mContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
 
         sensorMenager.unregisterListener(mLightSensorListener)
+        if(report.user() != null) {
+            var bundle = PersistableBundle()
+            val data = report.getData()
+            bundle.putString("data" , data)
+            bundle.putString("user", report.user())
+            JobInfo.Builder(
+                data.toByteArray().sum(),
+            ComponentName(mContext, CloudService::class.java))
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setExtras(bundle)
+            .build()
+            .also { jobInfo -> (mContext.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler)
+                .schedule(jobInfo)
+            }
+
+        }
+
+        //report.pushMessage(mContext)
 
     }
 }

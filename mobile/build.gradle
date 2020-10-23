@@ -17,13 +17,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     signingConfigs {
+        debug {
+            keyAlias 'key3'
+            keyPassword '5z74murd4'
+            storeFile file("/home/kacper/AndroidStudioProjects/key/filiplikeKey.jks")
+            storePassword '5z74murd4'
+        }
         release {
             keyAlias 'key3'
             keyPassword '5z74murd4'
@@ -31,6 +31,16 @@ android {
             storePassword '5z74murd4'
         }
     }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
 }
 
 dependencies {

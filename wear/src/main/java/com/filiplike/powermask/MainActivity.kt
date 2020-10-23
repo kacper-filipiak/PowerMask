@@ -24,8 +24,6 @@ class MainActivity : WearableActivity() {
     private  lateinit var contectDetector: ContactDetector
     private var currentState = FloatArray(5)
 
-    private var counter = 0
-    private val report:Report = Report()
 
     private var maskOn = false
     private var lockMedia = false
@@ -34,7 +32,7 @@ class MainActivity : WearableActivity() {
 
     lateinit var mediaPlayer: MediaPlayer
      lateinit var vibrator: Vibrator
-    lateinit var maskAnimation:AnimationDrawable
+    //lateinit var maskAnimation:AnimationDrawable
 
     //adding listener for sensor state change
 
@@ -43,12 +41,13 @@ class MainActivity : WearableActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val maskImage = findViewById<ImageView>(R.id.imageView2).apply {
-            //setImageResource(R.drawable.animation_on_list)
-            setImageResource(R.drawable.animation_off_list)
-            maskAnimation = drawable as AnimationDrawable
-        }
-        maskAnimation.start()
+       val maskImage = findViewById<ImageView>(R.id.imageView2).apply {
+       //    //setImageResource(R.drawable.animation_on_list)
+           setImageResource(R.drawable.icon_lightning)
+       //    maskAnimation = drawable as AnimationDrawable
+       }
+       ////TODO("Uncomment animation to start it")
+       //maskAnimation.start()
 
         imageView2.setOnClickListener { maskWear() }
 //        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -86,30 +85,28 @@ class MainActivity : WearableActivity() {
             mediaPlayer.start()
             //update UI
             textView.setText(R.string.button_on_text)
-            findViewById<ImageView>(R.id.imageView2).apply {
-                //setImageResource(R.drawable.animation_on_list)
-                setImageResource(R.drawable.animation_on_list)
-                maskAnimation = drawable as AnimationDrawable
-            }
-            maskAnimation.start()
+            //findViewById<ImageView>(R.id.imageView2).apply {
+            //    //setImageResource(R.drawable.animation_on_list)
+            //    setImageResource(R.drawable.animation_on_list)
+            //    maskAnimation = drawable as AnimationDrawable
+//
+            //}
+            //maskAnimation.start()
             maskOn = true
             TrackingService.startService(this, "You're defended!")
         }
         else{
             //Update UI
             textView.setText(R.string.button_off_text)
-            findViewById<ImageView>(R.id.imageView2).apply {
-                //setImageResource(R.drawable.animation_on_list)
-                setImageResource(R.drawable.animation_off_list)
-                maskAnimation = drawable as AnimationDrawable
-            }
-            maskAnimation.start()
+           //findViewById<ImageView>(R.id.imageView2).apply {
+           //    //setImageResource(R.drawable.animation_on_list)
+           //    setImageResource(R.drawable.animation_off_list)
+           //    //maskAnimation = drawable as AnimationDrawable
+           //}
+            //maskAnimation.start()
             //resetting values and pushing data
             maskOn = false
             lockMedia=false
-            report.pushReport(this)
-            report.clear()
-            counter = 0
 
             TrackingService.stopService(this)
         }
