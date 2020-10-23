@@ -40,7 +40,7 @@ class Report {
         items = hashMapOf()
     }
     fun getData():String{
-        return  "$user | $sessionData"
+        return  sessionData.dropLast(1)
     }
     fun pushMessage(context: Context){
         CloudControler().pushList(sessionData.split('|'))

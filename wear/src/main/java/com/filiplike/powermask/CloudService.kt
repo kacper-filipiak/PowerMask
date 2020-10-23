@@ -34,18 +34,24 @@ class CloudService : JobService() {
             val bundle = params[0]
 
             val strings = bundle.getString("data")!!.split('|')
-            val map:Map<String, Int> = strings.mapIndexed { index, s -> s to index }.toMap()
+            val map:Map<String, Int> = strings.mapIndexed { index, s -> s to index+1 }.toMap()
+            val user = bundle.getString("user", "unregisteredUser")
+            Log.d(ContentValues.TAG, "Uploading data: ${map.entries} user: $user")
+
+            if (strings.isNotEmpty() &&  user != "") {
                 //upload map to Firestore
-            firebase.collection("users").document(bundle.getString("user", "notLoggedUser")).set(map, SetOptions.merge())
-                .addOnSuccessListener {
-                    //Toast.makeText(cont, "uploaded", Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG,"Uploading array succeed")
-                }
-                .addOnFailureListener {
-                    //throwing exception
-                    Log.d(ContentValues.TAG,"Uploading array failed")
-                    //   Toast.makeText(cont, "upload failed", Toast.LENGTH_SHORT).show()
-                }
+                firebase.collection("users").document(user!!)
+                    .set(map, SetOptions.merge())
+                    .addOnSuccessListener {
+                        //Toast.makeText(cont, "uploaded", Toast.LENGTH_SHORT).show()
+                        Log.d(ContentValues.TAG, "Uploading array succeed")
+                    }
+                    .addOnFailureListener {
+                        //throwing exception
+                        Log.d(ContentValues.TAG, "Uploading array failed")
+                        //   Toast.makeText(cont, "upload failed", Toast.LENGTH_SHORT).show()
+                    }
+            }
             return 0
         }
     }
