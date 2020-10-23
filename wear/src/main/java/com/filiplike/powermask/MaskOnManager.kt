@@ -35,7 +35,7 @@ class MaskOnManager {
 
     private var initEvent = true
 
-    private lateinit var mContext: Context
+    private var mContext: Context
 
     constructor(context: Context){
 
@@ -94,10 +94,10 @@ class MaskOnManager {
     }
     fun destroy(){
         Toast.makeText(mContext, "You touched your face "+(counter-1).toString()+" times.", Toast.LENGTH_SHORT).show()
-
+        mediaPlayer.release()
         sensorMenager.unregisterListener(mLightSensorListener)
-        if(report.user() != null) {
-            var bundle = PersistableBundle()
+        if(report.user() != "") {
+            val bundle = PersistableBundle()
             val data = report.getData()
             bundle.putString("data" , data)
             bundle.putString("user", report.user())

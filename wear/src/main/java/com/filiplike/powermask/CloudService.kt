@@ -1,16 +1,11 @@
 package com.filiplike.powermask
 
-import android.app.Service
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
 import android.os.AsyncTask
-import android.os.IBinder
 import android.os.PersistableBundle
 import android.util.Log
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,7 +30,9 @@ class CloudService : JobService() {
 
             val strings = bundle.getString("data")!!.split('|')
             val map:Map<String, Int> = strings.mapIndexed { index, s -> s to index+1 }.toMap()
+
             val user = bundle.getString("user", "unregisteredUser")
+
             Log.d(ContentValues.TAG, "Uploading data: ${map.entries} user: $user")
 
             if (strings.isNotEmpty() &&  user != "") {

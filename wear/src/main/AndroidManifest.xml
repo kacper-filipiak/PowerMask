@@ -25,7 +25,6 @@
             android:name=".TrackingService"
             android:enabled="true"
             android:exported="true" />
-        <service android:name=".DataLayerService" />
 
         <uses-library
             android:name="com.google.android.wearable"

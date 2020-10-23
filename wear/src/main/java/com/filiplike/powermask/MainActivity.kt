@@ -2,21 +2,13 @@ package com.filiplike.powermask
 
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.wearable.activity.WearableActivity
 import android.widget.ImageView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDateTime
 
 
 class MainActivity : WearableActivity() {
@@ -27,14 +19,11 @@ class MainActivity : WearableActivity() {
 
     private var maskOn = false
     private var lockMedia = false
-//    lateinit var sensorMenager : SensorManager
-//    lateinit var rotationSensor: Sensor
 
     lateinit var mediaPlayer: MediaPlayer
      lateinit var vibrator: Vibrator
     //lateinit var maskAnimation:AnimationDrawable
 
-    //adding listener for sensor state change
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,31 +39,13 @@ class MainActivity : WearableActivity() {
        //maskAnimation.start()
 
         imageView2.setOnClickListener { maskWear() }
-//        this.sensorMenager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-//        rotationSensor = sensorMenager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-//
+
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         mediaPlayer = MediaPlayer.create(this, R.raw.sound)
 
         // Enables Always-on
         setAmbientEnabled()
     }
-    //handles beeping and buzzing
-//    private fun makeBeep(){
-//        //if media player unlocked
-//        if (!lockMedia){
-//            //lock media
-//            lockMedia = true
-//            //Vibrate
-//            vibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE))
-//            //Play sound
-//            mediaPlayer.start()
-//            //add to send list
-//            report.addItem(LocalDateTime.now())
-//            //updates counter
-//            counter++
-//        }
-//    }
 
     private fun maskWear(){
         if (!maskOn){
@@ -104,7 +75,6 @@ class MainActivity : WearableActivity() {
            //    //maskAnimation = drawable as AnimationDrawable
            //}
             //maskAnimation.start()
-            //resetting values and pushing data
             maskOn = false
             lockMedia=false
 
@@ -119,7 +89,7 @@ class MainActivity : WearableActivity() {
         }
     override fun onPause() {
         super.onPause()
-        //mediaPlayer.release()
+        mediaPlayer.release()
     }
 
 }
