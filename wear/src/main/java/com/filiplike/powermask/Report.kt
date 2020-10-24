@@ -7,10 +7,7 @@ class Report {
     private val index: Int = 0
     private var items: HashMap<String, LocalDateTime> = HashMap()
     private var sessionData = String()
-    private var user = "kisielWrosole"
-    fun user(): String {
-        return user
-    }
+
 
     //adds LocaleDateTime to prepare it for sending
     fun addItem(timestamp: LocalDateTime) {

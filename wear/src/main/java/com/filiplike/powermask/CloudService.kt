@@ -37,7 +37,8 @@ class CloudService : JobService() {
 
             if (strings.isNotEmpty() &&  user != "") {
                 //upload map to Firestore
-                firebase.collection("users").document(user!!)
+                firebase.collection("users").document(user!!).collection("sessions")
+                    .document(strings.first())
                     .set(map, SetOptions.merge())
                     .addOnSuccessListener {
                         //Toast.makeText(cont, "uploaded", Toast.LENGTH_SHORT).show()
