@@ -29,7 +29,7 @@ class CloudService : JobService() {
             val bundle = params[0]
 
             val strings = bundle.getString("data")!!.split('|')
-            val map:Map<String, Int> = strings.mapIndexed { index, s -> s to index+1 }.toMap()
+            val map:Map<String, String> = strings.mapIndexed { index, s -> (index+1).toString() to s }.toMap()
 
             val user = bundle.getString("user", "unregisteredUser")
 
