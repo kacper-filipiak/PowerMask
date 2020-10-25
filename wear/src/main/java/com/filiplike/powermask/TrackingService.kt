@@ -33,12 +33,13 @@ class TrackingService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         //do heavy work on a background thread
         val context = this
+        val credentials = intent?.getStringExtra ("inputExtra")?.split('|')
         corut = runBlocking { launch {
-            val maskOnManager : MaskOnManager = MaskOnManager(context)
+            val maskOnManager : MaskOnManager = MaskOnManager(context, credentials!![1], credentials!![2])
             lMaskOnManager = maskOnManager
         } }
 
-        val input = intent?.getStringExtra ("inputExtra")
+
         createNotificationChannel()
         val notificationIntent = Intent(this, AppOpener::class.java)
         val pendingIntent = PendingIntent.getActivity(
@@ -48,7 +49,7 @@ class TrackingService : Service() {
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("PowerMask service")
-            .setContentText(input)
+            .setContentText("${credentials!![0]} you're defended")
             .setSmallIcon(R.drawable.mask_on)
             .setContentIntent(pendingIntent)
             .build()
